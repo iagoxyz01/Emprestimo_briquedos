@@ -1,1 +1,1 @@
-brinquedoteca_api/
+brinquedoteca_api
