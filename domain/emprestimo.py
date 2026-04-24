@@ -1,41 +1,13 @@
-from typing import List
-from domain.crianca import Crianca
-from domain.brinquedo import Brinquedo
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
 
+@dataclass
 class Emprestimo:
-    _seq = 1 # autoincremento (estático)
-    def __init__(self, cliente: Cliente, qtd_max_produtos: int):
-        self._codigo = Pedido._seq
-        Pedido._seq += 1
-        self.cliente = cliente
-        self.qtd_max_produtos = int(qtd_max_produtos)
-        self.listaProdutos: List[Produto] = []
-        self.esta_entregue: bool = False
-
-        if self.qtd_max_produtos <= 0:
-            raise ValueError("Quantidade máxima deve ser maior que zero")
- 
-    @property
-    def codigo(self) -> int:
-        return self._codigo # imutável
- 
-    def adicionar_produto(self, produto: Produto) -> bool:
-        if len(self.listaProdutos) >= self.qtd_max_produtos:
-            return False
-        self.listaProdutos.append(produto)
-        return True
- 
-    def finalizar(self) -> float:
-        self.esta_entregue = True
-        total = 0.0
-        for p in self.listaProdutos:
-            total += p.preco_final()
-        return float(total)
-    
-    def total_se_finalizado(self) -> float:
-        if not self.esta_entregue:
-            return 0.0
-        total = 0.0
-        for p in self.listaProdutos:
-            total += p.preco_final()
-        return float(total)
+    id: int
+    crianca_id: int
+    brinquedo_id: int
+    data_emprestimo: datetime
+    data_devolucao: Optional[datetime] = None
+    status: str = "ativo"
+    multa: float = 0.0
